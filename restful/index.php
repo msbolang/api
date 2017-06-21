@@ -1,13 +1,14 @@
 <?php
-error_reporting(3);
+
+//error_reporting(3);
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-require __DIR__ . '/../lib/Article.php';
-require __DIR__ . '/../lib/User.php';
-require __DIR__ . '/../lib/db.php';
+require __DIR__ . '/lib/Article.php';
+require __DIR__ . '/lib/User.php';
+require __DIR__ . '/lib/db.php';
 
 class Restful {
 
