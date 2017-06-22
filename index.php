@@ -5,7 +5,7 @@ include "xcrypt.php";
   
 echo '<pre>';  
 
-$a = isset($_GET['a']) ? $_GET['a'] : '测试123';  
+$a = isset($_GET['a']) ? $_GET['a'] : '测试1f23';  
   
 //密钥  
 $key = '12345678123456781234567812345678'; //256 bit  
@@ -13,8 +13,8 @@ $key = '1234567812345678'; //128 bit
 $key = '12345678'; //64 bit  
   
 //设置模式和IV  
-$m = new Xcrypt($key, 'cbc', 'auto');  
-  
+//$m = new Xcrypt($key, 'cbc', 'auto');  
+  $m = new Xcrypt($key, 'cbc','auto');  
 //获取向量值  
 echo '向量：';  
 var_dump($m->getIV());  
@@ -31,4 +31,3 @@ var_dump($c);
   
 
 echo '</pre>';  
-?>

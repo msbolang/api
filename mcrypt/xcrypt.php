@@ -29,13 +29,13 @@ class Xcrypt{
     public function __construct($key, $mode = 'cbc', $iv = "off"){  
         switch (strlen($key)){  
         case 8:  
-            $this->mcrypt = 'MCRYPT_DES';  
+            $this->mcrypt = MCRYPT_DES;  
             break;  
         case 16:  
-            $this->mcrypt = 'MCRYPT_RIJNDAEL_128';  
+            $this->mcrypt = MCRYPT_RIJNDAEL_128;  
             break;  
         case 32:  
-            $this->mcrypt = 'MCRYPT_RIJNDAEL_256';  
+            $this->mcrypt = MCRYPT_RIJNDAEL_256;  
             break;  
         default:  
             die("Key size must be 8/16/32");  
@@ -45,20 +45,20 @@ class Xcrypt{
   
         switch (strtolower($mode)){  
         case 'ofb':  
-            $this->mode = 'MCRYPT_MODE_OFB';  
+            $this->mode = MCRYPT_MODE_OFB;  
             if ($iv == 'off') die('OFB must give a IV'); //OFB必须有向量  
             break;  
         case 'cfb':  
-            $this->mode = 'MCRYPT_MODE_CFB';  
+            $this->mode = MCRYPT_MODE_CFB;  
             if ($iv == 'off') die('CFB must give a IV'); //CFB必须有向量  
             break;  
         case 'ecb':  
-            $this->mode = 'MCRYPT_MODE_ECB';  
+            $this->mode = MCRYPT_MODE_ECB;  
             $iv = 'off'; //ECB不需要向量  
             break;  
         case 'cbc':  
         default:  
-            $this->mode = 'MCRYPT_MODE_CBC';  
+            $this->mode = MCRYPT_MODE_CBC;  
         }  
   
         switch (strtolower($iv)){  
@@ -66,8 +66,11 @@ class Xcrypt{
             $this->iv = null;  
             break;  
         case "auto":  
-            $source = PHP_OS=='WINNT' ? 'MCRYPT_RAND' : 'MCRYPT_DEV_RANDOM';  
-            $this->iv = mcrypt_create_iv(mcrypt_get_block_size($this->mcrypt, $this->mode), $source);  
+         //   $source = PHP_OS=='WINNT' ? MCRYPT_RAND : MCRYPT_DEV_RANDOM;  //部分linux机使用MCRYPT_DEV_RANDOM 会阻塞  建议使用MCRYPT_DEV_URANDOM
+       
+         $source = PHP_OS=='WINNT' ? MCRYPT_RAND : MCRYPT_DEV_URANDOM;  
+         $this->iv = mcrypt_create_iv(mcrypt_get_block_size($this->mcrypt, $this->mode), $source);  
+       
             break;  
         default:  
             $this->iv = $iv;  
